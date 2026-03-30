@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Form + Gallery</title>
+
+<style>
+body{
+    font-family: Arial;
+    margin: 0;
+    background: linear-gradient(120deg,#4facfe,#00f2fe);
+}
+
+/* NAVBAR */
+.navbar{
+    background: #222;
+    padding: 12px;
+    text-align: center;
+}
+
+.navbar button{
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    margin: 0 20px;
+    cursor: pointer;
+}
+
+.navbar button:hover{
+    text-decoration: underline;
+}
+
+/* SECTIONS */
+.section{
+    display: none;
+}
+
+.active{
+    display: block;
+}
+
+/* CONTAINER */
+.container{
+    background: white;
+    width: 500px;
+    margin: 40px auto;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+/* FORM */
+input{
+    width: 92%;
+    padding: 10px;
+    margin: 6px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button.action{
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    background: #007BFF;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button.action:hover{
+    background: #0056b3;
+}
+
+.error{
+    color: red;
+    font-size: 14px;
+}
+
+/* GALLERY */
+img{
+    width: 100%;
+    height: 280px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+#counter{
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+/* FOOTER */
+.footer{
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer a{
+    color: #00f2fe;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.footer a:hover{
+    text-decoration: underline;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <button onclick="showTab('home')">Home</button>
+    <button onclick="showTab('gallery')">Gallery</button>
+</div>
+
+<!-- HOME TAB -->
+<div id="home" class="section active">
+    <div class="container">
+
+    <h2>Registration Form</h2>
+
+    <input type="text" id="name" placeholder="Enter Name">
+    <div class="error" id="nameError"></div>
+
+    <input type="email" id="email" placeholder="Enter Email">
+    <div class="error" id="emailError"></div>
+
+    <input type="text" id="mobile" placeholder="Enter Mobile">
+    <div class="error" id="mobileError"></div>
+
+    <input type="text" id="city" placeholder="Enter City">
+    <div class="error" id="cityError"></div>
+
+    <button class="action" onclick="validate()">Submit</button>
+
+    </div>
+</div>
+
+<!-- GALLERY TAB -->
+<div id="gallery" class="section">
+    <div class="container">
+
+    <h2>Image Gallery</h2>
+
+    <img id="galleryImg" src="https://picsum.photos/id/1015/600/400">
+    <div id="counter">Image 1 / 4</div>
+
+    <button class="action" onclick="prev()">Previous</button>
+    <button class="action" onclick="next()">Next</button>
+
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <p>© 2026 My Website | All Rights Reserved</p>
+    <p>
+        <a href="#" onclick="showTab('home')">Home</a> |
+        <a href="#" onclick="showTab('gallery')">Gallery</a> |
+        <a href="#">Contact</a>
+    </p>
+</div>
+
+<script>
+
+/* TAB SWITCHING */
+function showTab(tab){
+    document.getElementById("home").classList.remove("active");
+    document.getElementById("gallery").classList.remove("active");
+
+    document.getElementById(tab).classList.add("active");
+}
+
+/* FORM VALIDATION */
+function validate(){
+
+var name=document.getElementById("name").value;
+var email=document.getElementById("email").value;
+var mobile=document.getElementById("mobile").value;
+var city=document.getElementById("city").value;
+
+document.getElementById("nameError").innerHTML="";
+document.getElementById("emailError").innerHTML="";
+document.getElementById("mobileError").innerHTML="";
+document.getElementById("cityError").innerHTML="";
+
+if(name==""){
+document.getElementById("nameError").innerHTML="Name Required";
+return;
+}
+
+if(email==""){
+document.getElementById("emailError").innerHTML="Email Required";
+return;
+}
+
+if(mobile.length!=10){
+document.getElementById("mobileError").innerHTML="Enter 10 Digit Mobile";
+return;
+}
+
+if(city==""){
+document.getElementById("cityError").innerHTML="City Required";
+return;
+}
+
+alert("Registration Successful");
+
+// switch to gallery
+showTab('gallery');
+}
+
+/* GALLERY LOGIC */
+var images=[
+"https://picsum.photos/id/1015/600/400",
+"https://picsum.photos/id/1016/600/400",
+"https://picsum.photos/id/1018/600/400",
+"https://picsum.photos/id/1024/600/400"
+];
+
+var i=0;
+
+function show(){
+document.getElementById("galleryImg").src=images[i];
+document.getElementById("counter").innerHTML="Image "+(i+1)+" / "+images.length;
+}
+
+function next(){
+i++;
+if(i>=images.length){
+i=0;
+}
+show();
+}
+
+function prev(){
+i--;
+if(i<0){
+i=images.length-1;
+}
+show();
+}
+
+</script>
+
+</body>
+</html>
